@@ -1,23 +1,13 @@
-FROM node:9.6.1 as builder
-
+### STAGE 1: Build ###
+FROM node:slim AS build
 WORKDIR /usr/src/app
-
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-COPY package.json .
-COPY public public
-COPY src src
-
-RUN npm install --silent
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
 RUN npm run build
-
-COPY build .
-
-RUN rm -rf src
-RUN rm -rf build
-
+### STAGE 2: Run ###
 FROM nginx:1.13.9-alpine
 
-COPY --from=builder /usr/src/app /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/hello-gaus /usr/share/nginx/html
 
 EXPOSE 80
