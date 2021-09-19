@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM node:9.6.1 AS build
+FROM node:slim AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
