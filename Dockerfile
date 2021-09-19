@@ -1,7 +1,3 @@
-When you build the application it's building in another cointainer/layer. You i'll need to build the application before and copy the build folder to /usr/src/app.
-
-So, this is fine:
-
 FROM node:9.6.1 as builder
 
 WORKDIR /usr/src/app
